@@ -1,152 +1,66 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
+    <h1>{{ allUsersCount }}</h1>
+    <h1>{{ countMsg }}</h1>
+    <div 
+      v-for="(user,i) in $store.state.allUsers"
+      :key="i"
+    >
+      {{ user.name }} {{user.msg}}
+    </div>
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify 
-          수정내용
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
+    <v-row>
+        <v-col cols="12" >
+          <v-text-field label="name" v-model="name"></v-text-field>
+        </v-col>
     </v-row>
+    <v-row>
+        <v-col cols="12" >
+          <v-textarea
+            outlined
+            name="input-7-4"
+            label="msg"
+            value=""
+            v-model="msg"
+          ></v-textarea>
+        </v-col>
+    </v-row>
+    <v-btn class="purple" @click="append">추가</v-btn>
   </v-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
   export default {
     name: 'HelloWorld',
+    data(){
+      return {
+        name: null,
+        msg: null
+      }
+    },
+    computed: {
+      // getters 함수명을  그대로 받아서 사용할수 있음
+      //...mapGetters(['allUsersCount','countMsg'])
 
-    data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
+      // getters 함수를 변수에 넣어서 사용할수 있음
+      ...mapGetters({
+        count : 'allUsersCount',
+        msgcount: 'countMsg'
+      })
+    },
+    methods:{
+      append(){
+          let userObj = {
+            name:this.name,
+            msg:this.msg
+          }
+          this.$store.state.allUsers.push(userObj)
+          
+      }
+    }
+
+    
+     
   }
 </script>
