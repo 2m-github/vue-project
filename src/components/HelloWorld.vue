@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <h1>{{ allUsersCount }}</h1>
-    <h1>{{ countMsg }}</h1>
+    <h1>{{ count }}</h1>
+    <h1>{{ msgcount }}</h1>
     <div 
       v-for="(user,i) in $store.state.allUsers"
       :key="i"

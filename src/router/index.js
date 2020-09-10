@@ -26,6 +26,11 @@ function load(component) {
     component: load("Image")
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: load("Login")
+  },
+  {
     path: '/wheeldraw',
     name: 'WheelDraw',
     component: load("WheelDraw")
