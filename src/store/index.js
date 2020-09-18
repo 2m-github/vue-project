@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     fbName:'meiyou',
     fbPhoto:null,
+    fbEmail:null,
     loginErr:false,
     loginSuccess:false
   },
@@ -23,6 +24,8 @@ export default new Vuex.Store({
       console.log('mutations');
       state.fbName = user.displayName;
       state.fbPhoto = user.photoURL;
+      state.fbEmail = user.email;
+      state.loginSuccess = true
     }
     
   },

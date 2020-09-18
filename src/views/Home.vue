@@ -63,32 +63,41 @@ export default {
   data() {
     return {
       comment:null,
-      info:[]
+      info:[],
+      count:0
     }
   },
   computed:{
-    ...mapState(['fbName','fbPhoto'])
+    ...mapState(['fbName','fbPhoto','fbEmail'])
   },
   methods: {
     
     async push(){
       let r = await this.$firebase.firestore().collection('comments').add({
-        
-        comment : this.comment
+        name : this.fbName,
+        comment : this.comment,
+        email : this.fbEmail,
       })
       //this.info.push({title:this.name, content:this.msg})
+      this.count++
       this.readInfo();
     },
     async readInfo(){
-      let snapshot = await this.$firebase.firestore().collection('comments').get()
+      let snapshot = await this.$firebase.firestore().collection('comments').get().catch(err => console.log("err==========", err))
       this.info = []
-      snapshot.forEach(element => {
-        
-        //this.info.push = element.data()
-        let {comment} = element.data()
-        
-        this.info.push({comment, id: element.id})
-      });
+      console.log("snapshot=",snapshot)
+      if (snapshot != null || snapshot != undefined){
+        snapshot.forEach(element => {
+          
+          //this.info.push = element.data()
+          let {comment} = element.data()
+          console.log(element.data())
+          this.info.push({comment, id:element.id})
+        });
+      }
+      else{
+        alert('로그인하면 내용을 볼수있음')
+      }
     },
     async updateInfo(id){
       

@@ -54,11 +54,6 @@ function load(component) {
     component: load("Mypage")
   },
   {
-    path: '/sign',
-    name: 'Sign',
-    component: load("Sign")
-  },
-  {
     path: '/wheeldraw',
     name: 'WheelDraw',
     component: load("WheelDraw")
