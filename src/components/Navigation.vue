@@ -19,7 +19,7 @@
           <v-icon>mdi-heart</v-icon>
         </v-btn>
 
-        <v-btn icon value="mypage" router :to="{name:'Login'}" exact>
+        <v-btn icon value="mypage" router :to="{name:'Sign'}" exact>
           <span>Mypage</span>
           <v-icon>mdi-account</v-icon>
         </v-btn>

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
-import image from '../views/Image.vue'
+
+
 
 Vue.use(VueRouter)
 
@@ -28,7 +30,33 @@ function load(component) {
   {
     path: '/login',
     name: 'Login',
+    beforeEnter(to,from,next){
+      if (store.state.loginSuccess){
+        next('/mypage')
+      }
+      else{
+        next()
+      }
+    },
     component: load("Login")
+  },
+  {
+    path: '/mypage',
+    name: 'Mypage',
+    beforeEnter(to,from,next){
+      if (store.state.loginSuccess){
+        next()
+      }
+      else{
+        next('/login')
+      }
+    },
+    component: load("Mypage")
+  },
+  {
+    path: '/sign',
+    name: 'Sign',
+    component: load("Sign")
   },
   {
     path: '/wheeldraw',

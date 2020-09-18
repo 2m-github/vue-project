@@ -20,7 +20,8 @@ export function delayedInfoAPI(){
       return axios.get(`https://reqres.in/api/users?page=2`)
         .then(res => {
           resolve(res.data)
-          //console.log(response.data)
+          console.log(res.status)
+          console.log(res.headers)
         })
         .catch(err => reject(err))
     })

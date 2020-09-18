@@ -41,7 +41,8 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="login({email:email, pwd:pwd})">Login</v-btn>
+                  <v-btn color="primary" @click="login({email:email, password:pwd})">Login</v-btn>
+                  
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -70,7 +71,12 @@ import { mapActions } from 'vuex'
 
     }),
     methods:{
-        ...mapActions(['login'])
-    }  
+        ...mapActions(['login']),
+        
+    },
+    created(){
+      let token = localStorage.getItem("loginToken")
+      console.log("loginpage", token);
+    }
   }
 </script>
