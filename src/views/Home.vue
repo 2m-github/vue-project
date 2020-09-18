@@ -13,7 +13,7 @@
           ></v-textarea>
         </v-col>
     </v-row>
-    <v-btn class="purple" @click="push">추가</v-btn>
+    <!-- <v-btn class="purple" @click="push">추가</v-btn> -->
     
     <!-- <ul>
       <li
