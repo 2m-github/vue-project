@@ -1,2 +1,5 @@
 body {background-color: #000000;}
 #app {padding-bottom:60px;}
+.theme--light.v-app-bar.v-toolbar.v-sheet.top-bar { border-radius: 0 !important; border-bottom: 1px solid #dddddd !important;}
+.ico-profile {width:30px; height:30px; border-radius: 50%; overflow: hidden; }
+/* .ico-profile span {display:block; border-radius: 50%; overflow: hidden;} */

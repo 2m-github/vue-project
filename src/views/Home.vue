@@ -26,9 +26,34 @@
         <v-btn @click="del(item.id)">삭제</v-btn>
       </li>
     </ul> -->
-    <v-row>
+    <v-dialog v-model="dialog">
+
+      <v-card>
+        <v-card-title class="headline">
+          Use Google's location service?
+        </v-card-title>
+        <v-card-text>
+          추가완료
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+            >
+              확인
+            </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+<input type="file" accept="image/*" capture="camera">
+<input type="file" accept="video/*" capture="camcorder">
+<input type="file" accept="audio/*" capture="microphone">
+
+    <v-row v-if="$store.state.loginSuccess">
       <v-col cols="12" sm="6" offset-sm="3">
-        <v-card>
+        <v-card flat>
           <v-list two-line>
             <template v-for="(item, index) in info">
               <v-divider
@@ -51,6 +76,26 @@
         </v-card>
       </v-col>
     </v-row>
+    <div v-if="$store.state.loginSuccess == false">
+      <div v-html="msgNo"></div>
+    </div>
+
+    <v-tabs
+      background-color="cyan"
+      dark
+      next-icon="mdi-arrow-right-bold-box-outline"
+      prev-icon="mdi-arrow-left-bold-box-outline"
+      show-arrows
+    >
+      <v-tabs-slider color="yellow"></v-tabs-slider>
+      <v-tab
+        v-for="i in 30"
+        :key="i"
+        :href="'#tab-' + i"
+      >
+        Item {{ i }}
+      </v-tab>
+    </v-tabs>
   </div>
 </template>
 
@@ -64,7 +109,9 @@ export default {
     return {
       comment:null,
       info:[],
-      count:0
+      count:0,
+      msgNo:'',
+      dialog: false
     }
   },
   computed:{
@@ -81,6 +128,7 @@ export default {
       //this.info.push({title:this.name, content:this.msg})
       this.count++
       this.readInfo();
+      this.dialog = true
     },
     async readInfo(){
       let snapshot = await this.$firebase.firestore().collection('comments').get().catch(err => console.log("err==========", err))
@@ -96,7 +144,8 @@ export default {
         });
       }
       else{
-        alert('로그인하면 내용을 볼수있음')
+        
+        this.msgNo = '<p>로그인하면 내용을 볼수있음</p>'
       }
     },
     async updateInfo(id){

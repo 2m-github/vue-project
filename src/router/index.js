@@ -66,4 +66,14 @@ const router = new VueRouter({
   routes
 })
 
+// router.beforeEach((to, from, next) => {
+  
+//   if(store.state.loginSuccess){
+//     console.log(store.state.loginSuccess)
+//     next()
+//   }
+
+  
+// })
+
 export default router

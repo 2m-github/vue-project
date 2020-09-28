@@ -32,7 +32,7 @@
 
 <script>
 export default {
-    name: 'Sign',
+    name: 'Login',
     data(){
         return {
             email:null,

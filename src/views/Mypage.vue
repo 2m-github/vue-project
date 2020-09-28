@@ -2,6 +2,7 @@
     <div>
     <h1>mypage</h1>
         <v-btn @click="logout">로그아웃</v-btn>
+        
     </div>
 </template>
 
