@@ -3,7 +3,9 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import mixin from '@/mixin/cookieMixin.js'
 import router from '@/router' 
+
 Vue.use(Vuex)
+
 
 export default new Vuex.Store({
   //state
@@ -32,7 +34,7 @@ export default new Vuex.Store({
   // actions
   actions: {
     fbUsersAction({commit},user){
-      console.log('실행',user);
+      console.log('실행');
       commit('setFbUser',user)
     }
   },

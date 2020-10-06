@@ -47,6 +47,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <img src="assets/images/clip.png" width="300" alt=""/>
 <input type="file" accept="image/*" capture="camera">
 <input type="file" accept="video/*" capture="camcorder">
 <input type="file" accept="audio/*" capture="microphone">
@@ -105,6 +106,20 @@
 import { mapState } from 'vuex'
 export default {
   name: 'Home',
+  head: {
+    title: {
+      inner: '레이아웃'
+    },
+    // Meta tags
+    meta: [
+      { name: 'keywords', content: '레이아웃' },
+      { property:'og:type', content:'image/jpeg'},
+      { property:'og:title', content:'공유페이지 타이틀'},
+      { property:'og:url', content:'https://www.naver.com'},
+      { property:'og:description', content:'공유'},
+      { property:'og:image', content:'공유이미지 경로'}
+    ]
+  },
   data() {
     return {
       comment:null,
@@ -138,8 +153,9 @@ export default {
         snapshot.forEach(element => {
           
           //this.info.push = element.data()
+          console.log("sssss===",element.data())
           let {comment} = element.data()
-          console.log(element.data())
+          //console.log(element.data())
           this.info.push({comment, id:element.id})
         });
       }
