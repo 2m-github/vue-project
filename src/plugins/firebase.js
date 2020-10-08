@@ -29,7 +29,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     // User is signed in.
     //console.log('로그인 정보', user)
     store.dispatch('fbUsersAction',user);
-    router.push({name:'Home'})
+    //router.push({name:'Home'})
     
   } else {
     // No user is signed in.

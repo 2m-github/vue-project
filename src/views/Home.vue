@@ -48,6 +48,7 @@
       </v-card>
     </v-dialog>
     <img src="assets/images/clip.png" width="300" alt=""/>
+    <input type="file" accept="image/*">
 <input type="file" accept="image/*" capture="camera">
 <input type="file" accept="video/*" capture="camcorder">
 <input type="file" accept="audio/*" capture="microphone">

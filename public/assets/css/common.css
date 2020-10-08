@@ -3,3 +3,5 @@ body {background-color: #000000;}
 .theme--light.v-app-bar.v-toolbar.v-sheet.top-bar { border-radius: 0 !important; border-bottom: 1px solid #dddddd !important;}
 .ico-profile {width:30px; height:30px; border-radius: 50%; overflow: hidden; }
 /* .ico-profile span {display:block; border-radius: 50%; overflow: hidden;} */
+.img_box { min-width:200px; min-height:200px; display: inline-block; border:1px solid #ddd; background-color: #f6f6f6; font-size: 0; line-height: 0;}
+.img_box img {max-height: 200px;}
