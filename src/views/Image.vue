@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import { delayedInfoAPI } from '@/store/view/api.js'
 export default {
     data() {
@@ -51,7 +52,7 @@ export default {
                 reader.readAsDataURL(this.files[0]);
                 console.log("url=====",this.files[0]);
                 reader.onload = function(){
-                    console.log("a=====",reader.result);
+                    
                     document.getElementById("myimg").src = reader.result
                 }
                 
@@ -63,7 +64,7 @@ export default {
             //this.ImgName = document.getElementById('namebox').value;
             this.ImgName = "IMG_" + Date.now();
             var uploadTask = this.$firebase.storage().ref('images/' + this.ImgName + ".jpg").put(this.files[0])
-            console.log("up:==",uploadTask)
+            
             this.loding = true;
             uploadTask.on('state_changed', function(snapshot){
                 
@@ -88,7 +89,18 @@ export default {
                     //     Link: this.ImgUrl
                     // })
                     this.loding = false;
-                    alert('업로드 완료')
+                    //alert('업로드 완료')
+                    this.setConfirmDialogAction({
+                        title:'알림',
+                        text: '이미지 추가 완료',
+                        btn:{
+                            name:'닫기',
+                            click: ()=>{
+                                alert(123);
+                            }
+                        }
+                    })
+                    
                 })
             })
             
@@ -108,16 +120,29 @@ export default {
             else{
                 alert("no");
             }
-        }
+        },
+        ...mapActions({
+            setConfirmDialogAction:'setConfirmDialogAction'
+        }),
+        
+
     },
     created(){
         this.delayedData();
         var imgDate = Date.now();
-        console.log(imgDate)
+        
         
     },
+    computed:{
+        ...mapState(['confirmDialog'])
+    },
     mounted(){
+        console.log("score:",score);
+        score = 80;
+        var score;
         
+        console.log("score:", typeof score, score)
+        console.log('state=>->',this.confirmDialog)
     }
 }
 </script>

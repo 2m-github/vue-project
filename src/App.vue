@@ -6,6 +6,7 @@
       <router-view />
     </v-main>
     <navigation />
+    <confirm-dialog v-if="$store.state.confirmDialog" />
   </v-app>
 </template>
 
@@ -13,13 +14,15 @@
 
 import Navigation from './components/Navigation.vue';
 import TopBar from './components/TopBar.vue';
+import ConfirmDialog from './components/ConfirmDialog.vue'
 
 export default {
   name: 'App',
 
   components: {
     Navigation,
-    TopBar
+    TopBar,
+    ConfirmDialog
   },
 
   data: () => ({
