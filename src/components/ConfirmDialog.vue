@@ -42,6 +42,7 @@ export default {
         ...mapState(['confirmDialog']),
         isShowDialog:{
             get(){
+              console.log('is getter')
                 return !!this.confirmDialog
             },
             set(v){
@@ -63,7 +64,7 @@ export default {
             
         },
         closeDialog(){
-            this.confirmDialog.btn.click();
+            //this.confirmDialog.btn.click();
             this.isShowDialog = false
 
         }

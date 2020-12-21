@@ -1,26 +1,35 @@
 <template>
     <div>
+        <div class="img_box d-flex align-center justify-center" outlined>
         
-        <div class="img_box"><img id="myimg" src="" alt="" /></div>
+            <img id="myimg" src="" alt="" />
+        
+        </div>
         <br>
         
+        
         <label for="" id="UpProgress"></label><br>
-        <v-progress-circular indeterminate color="primary" v-if="loding"></v-progress-circular>
+        
         <v-btn @click="select">select</v-btn><br>
-        <v-btn @click="upload">upload</v-btn>
+        <v-btn @click="upload" id="upload">upload</v-btn>
         <v-btn @click="read">read</v-btn>
-        <ul>
-            <li v-for="(imgs,index) in readFiles" :key="index">
-                <img :src="imgs.Link" :alt="imgs.name">
-            </li>
-        </ul>
+        <v-overlay :value="overlay">
+            <v-progress-circular indeterminate color="primary" v-if="loding"></v-progress-circular>
+        </v-overlay>
+        <component :is="wheel" v-if="isImage" />
+
+        
+        
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-import { delayedInfoAPI } from '@/store/view/api.js'
+
+
+
 export default {
+    name: 'FileUpload',
     data() {
         return {
             delayUsers:{},
@@ -29,17 +38,14 @@ export default {
             files:[],
             readFiles:[],
             progress:0,
-            loding:false
+            loding:false,
+            overlay:false,
+            isImage:false,
+            
         }
     },
     methods: {
-        delayedData(){
-            delayedInfoAPI().then(users => {
-                
-                this.delayUsers = users.data
-                console.log(this.delayUsers)
-            })
-        },
+        
         select(e){
             var input = document.createElement('input');
             input.type = 'file';
@@ -47,10 +53,10 @@ export default {
             
             input.onchange = e => {
                 this.files = e.target.files;
-                console.log(this.files);
+                
                 let reader = new FileReader();
                 reader.readAsDataURL(this.files[0]);
-                console.log("url=====",this.files[0]);
+                
                 reader.onload = function(){
                     
                     document.getElementById("myimg").src = reader.result
@@ -61,11 +67,16 @@ export default {
             input.click();
         },
         upload (){
-            //this.ImgName = document.getElementById('namebox').value;
+            try {
+                
+            
+            
             this.ImgName = "IMG_" + Date.now();
             var uploadTask = this.$firebase.storage().ref('images/' + this.ImgName + ".jpg").put(this.files[0])
             
             this.loding = true;
+            this.overlay = true
+            document.getElementById('upload').innerHTML = '업로드중...';
             uploadTask.on('state_changed', function(snapshot){
                 
                 this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -76,7 +87,7 @@ export default {
                 alert('error img');
             },
             ()=>{
-                console.log("add====")
+                
                 uploadTask.snapshot.ref.getDownloadURL().then(async url => {
                     this.ImgUrl = url;
 
@@ -89,37 +100,31 @@ export default {
                     //     Link: this.ImgUrl
                     // })
                     this.loding = false;
+                    this.overlay = false;
+
+                    document.getElementById('upload').innerHTML = 'upload';
                     //alert('업로드 완료')
                     this.setConfirmDialogAction({
                         title:'알림',
                         text: '이미지 추가 완료',
                         btn:{
                             name:'닫기',
-                            click: ()=>{
-                                alert(123);
-                            }
+                            // click: ()=>{
+                            //     alert(123);
+                            // }
                         }
                     })
                     
                 })
+                
             })
+            } catch (error) {
+                alert('cath error' ,error)
+            }
             
         },
         async read(){
-            //this.ImgName = document.getElementById('namebox').value
-            let snapshot = await this.$firebase.firestore().collection('imgInfo').get().catch(err => console.log(err))
-            console.log("snapshot_read",snapshot)
-            this.readFiles = [];
-            if (snapshot != null || snapshot != undefined){
-                snapshot.forEach(element => {
-                    console.log("uuuuu===",element.data());
-                    
-                    this.readFiles.push(element.data())
-                });
-            }
-            else{
-                alert("no");
-            }
+            this.isImage = true;
         },
         ...mapActions({
             setConfirmDialogAction:'setConfirmDialogAction'
@@ -128,21 +133,22 @@ export default {
 
     },
     created(){
-        this.delayedData();
         var imgDate = Date.now();
         
         
     },
     computed:{
-        ...mapState(['confirmDialog'])
+        ...mapState(['confirmDialog']),
+        wheel(){
+            
+            return () => import(`./AllImage.vue`);
+        }
     },
     mounted(){
-        console.log("score:",score);
-        score = 80;
-        var score;
         
-        console.log("score:", typeof score, score)
-        console.log('state=>->',this.confirmDialog)
+        
+        
+        
     }
 }
 </script>

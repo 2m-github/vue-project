@@ -3,5 +3,17 @@ body {background-color: #000000;}
 .theme--light.v-app-bar.v-toolbar.v-sheet.top-bar { border-radius: 0 !important; border-bottom: 1px solid #dddddd !important;}
 .ico-profile {width:30px; height:30px; border-radius: 50%; overflow: hidden; }
 /* .ico-profile span {display:block; border-radius: 50%; overflow: hidden;} */
-.img_box { min-width:200px; min-height:200px; display: inline-block; border:1px solid #ddd; background-color: #f6f6f6; font-size: 0; line-height: 0;}
+.img_box {position: relative; width:200px; height:200px; margin:0 auto; border:1px solid #ddd; background-color: #f6f6f6; font-size: 0; line-height: 0;}
 .img_box img {max-height: 200px;}
+.img_box::before {position: absolute; left:50%; top:50%; content: ""; width:20px; height:20px; color:#000000;}
+.v-dialog.image-detail-popup {padding-top: 56px !important;}
+
+.image_detail_img {position:relative;}
+.image_detail_img > img {width: 100%;}
+.image_detail_img h2 {position:absolute; left:0; bottom:0; }
+.image_detail_title {padding:16px; color:#fff; font-size:1.25rem; line-height: 2rem;}
+
+.writer {display:flex; height:30px; padding:16px;}
+.writer .writer_profile {width:30px; height:30px; border-radius: 50%; overflow: hidden;}
+.writer .writer_profile img {widows: 100%;}
+.writer .wirter_id {flex: 1;}

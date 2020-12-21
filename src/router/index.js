@@ -23,34 +23,39 @@ function load(component) {
     component: load("About")
   },
   {
-    path: '/image',
-    name: 'Image',
-    component: load("Image")
+    path: '/all_image',
+    name: 'AllImage',
+    component: load("AllImage")
+  },
+  {
+    path: '/file',
+    name: 'FileUpload',
+    component: load("FileUpload")
   },
   {
     path: '/login',
     name: 'Login',
-    beforeEnter(to,from,next){
-      if (store.state.loginSuccess){
-        next('/mypage')
-      }
-      else{
-        next()
-      }
-    },
+    // beforeEnter(to,from,next){
+    //   if (store.state.loginSuccess){
+    //     next('/mypage')
+    //   }
+    //   else{
+    //     next()
+    //   }
+    // },
     component: load("Login")
   },
   {
     path: '/mypage',
     name: 'Mypage',
-    beforeEnter(to,from,next){
-      if (store.state.loginSuccess){
-        next()
-      }
-      else{
-        next('/login')
-      }
-    },
+    // beforeEnter(to,from,next){
+    //   if (store.state.loginSuccess){
+    //     next()
+    //   }
+    //   else{
+    //     next('/login')
+    //   }
+    // },
     component: load("Mypage")
   },
   {

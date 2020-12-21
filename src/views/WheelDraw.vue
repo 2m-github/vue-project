@@ -1,130 +1,199 @@
+
+
+
 <template>
-<div>
-    <span>Prize number: {{ prizeNumber }}</span>
-  <button type="button" @click="!rolling && prizeNumber < 8 && (prizeNumber++)" :disabled="rolling || prizeNumber === 8">Add</button>
-  <button type="button" @click="!rolling && prizeNumber > 2 && (prizeNumber--)" :disabled="rolling || prizeNumber === 2">Remove</button>
-   <div class="wheel-wrapper">
-    <div
-      class="wheel-pointer"
-      @click="onClickRotate"
-    >
-      Start
-    </div>
-    <div
-      class="wheel-bg"
-      :class="{freeze: freeze}"
-      :style="`transform: rotate(${wheelDeg}deg)`"
-    >
-      <div class="prize-list">
-        <div
-          class="prize-item-wrapper"
-          v-for="(item,index) in prizeList"
-          :key="index"
+  <div>
+    <template>
+  <v-card
+    class="mx-auto"
+    width="256"
+    tile
+  >
+    <v-navigation-drawer permanent>
+      <v-system-bar></v-system-bar>
+      <v-list>
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="title">
+              John Leider
+            </v-list-item-title>
+            <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+          </v-list-item-content>
+
+          <v-list-item-action>
+            <v-icon>mdi-menu-down</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="selectedItem"
+          color="primary"
         >
-          <div
-            class="prize-item"
-            :style="`transform: rotate(${(360/ prizeList.length) * index}deg)`"
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
           >
-            <div class="prize-name">
-              {{ item.name }}
-            </div>
-            <div class="prize-icon">
-              <img :src="item.icon">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </v-card>
 </template>
+<v-system-bar></v-system-bar>
+    <test>
+      <template v-slot:header="props">
+        <span>부모 header {{ props.names }}</span>
+      </template>
+      <template v-slot:body>
+        <span>부모 body </span>
+      </template>
+      <template v-slot:footer>
+        <span>부모 footer </span>
+      </template>
+      <template v-slot:default>
+        <p>default content</p>
+        <v-btn @click="loadLink('https://www.naver.com/')">링크</v-btn>
+      </template>
+    </test>
+    
+  </div>
+</template>
+  
 
 <script>
+
+import Test from './Test.vue';
+import {common} from '@/mixin'
 export default {
-    
-  data() {
+  mixins:[
+    common
+  ],
+  components:{
+    Test
+  },
+  data(){
     return {
-      freeze: false,
-      rolling: false,
-      wheelDeg: 0,
-      prizeNumber: 8,
-      prizeListOrigin: [
-        {
-          icon: "https://picsum.photos/40?random=1",
-          name: "$10000"
-        },
-        {
-          icon: "https://picsum.photos/40?random=6",
-          name: "Thank you!"
-        },
-        {
-          icon: "https://picsum.photos/40?random=2",
-          name: "$500"
-        },
-        {
-          icon: "https://picsum.photos/40?random=3",
-          name: "$100"
-        },
-        {
-          icon: "https://picsum.photos/40?random=6",
-          name: "Thank you!"
-        },
-        {
-          icon: "https://picsum.photos/40?random=4",
-          name: "$50"
-        },
-        {
-          icon: "https://picsum.photos/40?random=5",
-          name: "$10"
-        },
-        {
-          icon: "https://picsum.photos/40?random=6",
-          name: "Thank you!"
-        }
-      ]
-    };
-  },
-  computed: {
-    prizeList() {
-      return this.prizeListOrigin.slice(0, this.prizeNumber);
-    }
-  },
-  methods: {
-    onClickRotate() {
-      if (this.rolling) {
-        return;
+      value:1,
+      persons: {name:'lee',age:'20'},
+      ex4:null,
+      selectedItem:0,
+      items: [
+        { text: 'My Files', icon: 'mdi-folder' },
+        { text: 'Shared with me', icon: 'mdi-account-multiple' },
+        { text: 'Starred', icon: 'mdi-star' },
+        { text: 'Recent', icon: 'mdi-history' },
+        { text: 'Offline', icon: 'mdi-check-circle' },
+        { text: 'Uploads', icon: 'mdi-upload' },
+        { text: 'Backups', icon: 'mdi-cloud-upload' },
+      ],
+      texts: {
+        ['111']:`1111111111`,
+        ['222']:`2222222222`,
+        ['333']:`3333333333`,
       }
-      const result = Math.floor(Math.random() * this.prizeList.length);
-      this.roll(result);
-    },
-    roll(result) {
-      this.rolling = true;
-      const { wheelDeg, prizeList } = this;
-      this.wheelDeg =
-        wheelDeg -
-        wheelDeg % 360 +
-        6 * 360 +
-        (360 - 360 / prizeList.length * result);
-      setTimeout(() => {
-        this.rolling = false;
-        alert("Result：" + prizeList[result].name);
-      }, 4500);
     }
   },
-  watch: {
-    prizeNumber() {
-      this.freeze = true;
-      this.wheelDeg = 0;
+  methods:{
+    
+    testfun(){
+      let persons2 = this.persons;
+      let persons3 = persons2;
+      persons3.sex = 'M';
+      console.log('persons',this.persons)
+      for (const key in persons2) {
+        if (persons2.hasOwnProperty(key)) {
+          persons3.name = 'sun';
+          console.log('true', persons2[key], this.persons.sex,)
+          
+        }
+        else
+        {
+          console.log('false',persons2)
+        }
+      }
+      const uri = 'https://www.baidu.com/s?cl=3&tn=baidutop10&fr=top1000&wd=%E8%8B%B9%E6%9E%9C11%E6%9C%8811%E6%97%A5%E5%86%8D%E5%BC%80%E5%8F%91%E5%B8%83%E4%BC%9A&rsv_idx=2&rsv_dl=fyb_n_homepage&hisfilter=1'
+      const enc = encodeURI(uri)
+      console.log(enc)
+      const dec = decodeURI(uri)
+      console.log(dec)
+      
+      function getThisBinding(){
+        return this;
+      }
 
-      setTimeout(() => {
-        this.freeze = false;
-      }, 0);
+      const thisArg = { a : 1 }
+      console.log(getThisBinding.call(this.persons))
+      console.log(getThisBinding.apply(thisArg))
+      console.log(this.value)
+      
+
+    },
+    showList(num){
+      return {
+        '오':'fffff',
+        '이':'ddddd',
+        '유':'ccccc'
+      }[num]
     }
+  },
+  mounted(){
+    console.log('texts========',this.texts['222'])
+    console.log(this.showList('유'))
+    this.testfun();
+    console.log('query',this.$route.query.name);
+    
+    const obj = {
+      
+      async foo(){
+        console.log("timeout==0000")
+        await setTimeout(()=>{
+          
+          console.log("timeout==")
+        },100)
+      }
+    }
+    //obj.foo();
+    function wait(){
+      return new Promise((resolve, reject) =>{
+      setTimeout(function(){
+        
+        resolve('done!')
+      },3000)
+      })
+    }
+    async function foo2(){
+      console.log("timeout==[s]")
+      wait().then(e =>{
+        console.log(e);
+      });
+      console.log("timeout==[E]")
+    }
+    const re = foo2()
+    
   }
-
-
 }
 </script>
+
+
+
 
 <style scoped>
 .wheel-wrapper {
@@ -207,6 +276,5 @@ export default {
 .prize-item .prize-name {
     padding: 16px 0;
   }
-.prize-item .prize-icon img {
-  }
+
 </style>
