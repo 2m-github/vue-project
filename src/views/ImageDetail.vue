@@ -26,23 +26,30 @@
       
       
      <div class="image_detail_img">
-         <img :src="imgSrc" alt="" />
+         <pinch-zoom>
+            <img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" alt="" />
+         </pinch-zoom>
          <h2 class="image_detail_title">{{imgTitle}}</h2>
      </div>
      <div class="writer">
          <div class="writer_profile">
             <img :src="writerProfile" alt="" />
          </div>
-         <div class="wirter_id">my123@email.com</div>
+         <div class="wirter_id">my123@email.com33</div>
      </div>
+     
 
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import PinchZoom from 'vue-pinch-zoom'
 export default {
     name:'ImageDetail',
+    components:{
+      PinchZoom
+    },
     props:{
         dialog:{
             type: Boolean,
@@ -62,7 +69,8 @@ export default {
         return {
             isShowDialog: false,
             src: null,
-            writerProfile: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
+            writerProfile: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
+            count:10
         }
     },
     methods:{
@@ -72,6 +80,9 @@ export default {
           this.$emit('defaultDetailIMG','https://cdn.vuetifyjs.com/images/cards/docks.jpg')
           this.$emit('defaultDetailTitle','')
         }
+    },
+    mounted(){
+
     }
 }
 </script>

@@ -33,7 +33,9 @@
     </v-col>
   </v-row>
   <!-- image detail page  -->
-  <image-detail :dialog="dialog" :imgSrc="imgSrc" :imgTitle="imgTitle" @dialogClose="dialogClose" @defaultDetailIMG="defaultDetailIMG" @defaultDetailTitle="defaultDetailTitle" />
+  
+  
+  <component :is="componentImageDetail" :dialog="dialog" :imgSrc="imgSrc" :imgTitle="imgTitle" @dialogClose="dialogClose" @defaultDetailIMG="defaultDetailIMG" @defaultDetailTitle="defaultDetailTitle"></component>
 </div>
 </template>
 
@@ -53,6 +55,11 @@ export default {
             imgSrc:null,
             imgTitle:null
         }
+    },
+    computed:{
+      componentImageDetail(){
+        return () => import ('./ImageDetail')
+      }
     },
     methods: {
         
